@@ -239,6 +239,7 @@ class UnsupervisedModel(BaseModel):
     def shared_step(self, batch):
         x, _ = batch
         z = torch.randn(x.shape[0], self.latent_dim, 1, 1)
+        z = z.to(self.device)
         x_hat = self.generator(z)
         prob_x, feat_x = self.discriminator(x)
         prob_x_hat, feat_x_hat = self.discriminator(x_hat.detach())
